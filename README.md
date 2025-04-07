@@ -1,1 +1,1 @@
-# podstawy-kryptografii
+# Repozytorium na laboratoria z podstaw kryptografii
