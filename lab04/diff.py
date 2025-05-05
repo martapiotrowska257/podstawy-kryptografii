@@ -1,0 +1,30 @@
+""" Autorem tego zadania jest Marta Piotrowska """
+
+def load_hashes(file):
+    with open(file, "r") as f:
+        return [line.strip().split(' *-')[0] for line in f if line.strip()]
+
+def compare_hashes(h1, h2):
+    n1 = int(h1, 16)
+    n2 = int(h2, 16)
+    bit_diff = bin(n1 ^ n2).count('1')
+    total_bits = max(len(h1), len(h2)) * 4
+    percent_diff = (bit_diff / total_bits) * 100
+    return bit_diff, total_bits, percent_diff
+
+def main():
+    hashes = load_hashes("hash.txt")
+
+    if len(hashes) < 2:
+        print("Potrzeba co najmniej dwóch hashy w pliku.")
+        return
+
+    for i in range(0, len(hashes) - 1, 2):
+        h1 = hashes[i]
+        h2 = hashes[i + 1]
+        bit_diff, total_bits, percent_diff = compare_hashes(h1, h2)
+        print(f"Para {i//2 + 1}:")
+        print(f"  Liczba różniących się bitów: {bit_diff} z {total_bits}, procentowo: {percent_diff:.0f} %\n")
+
+if __name__ == "__main__":
+    main()
