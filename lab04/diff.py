@@ -19,12 +19,20 @@ def main():
         print("Potrzeba co najmniej dwóch hashy w pliku.")
         return
 
-    for i in range(0, len(hashes) - 1, 2):
-        h1 = hashes[i]
-        h2 = hashes[i + 1]
-        bit_diff, total_bits, percent_diff = compare_hashes(h1, h2)
-        print(f"Para {i//2 + 1}:")
-        print(f"  Liczba różniących się bitów: {bit_diff} z {total_bits}, procentowo: {percent_diff:.0f} %\n")
+    funkcjeHashowania = ['md5sum', 'sha1sum', 'sha224sum', 'sha256sum', 'sha384sum', 'sha512sum', 'b2sum']
+    with open("diff.txt", "w") as f:
+        for i in range(0, len(hashes) - 1, 2):
+            h1 = hashes[i]
+            h2 = hashes[i + 1]
+            bit_diff, total_bits, percent_diff = compare_hashes(h1, h2)
+            result = (
+                f"cat hash-.pdf personal.txt | " + funkcjeHashowania[int(i/2)] + "\n" +
+                f"cat hash-.pdf personal_.txt | " + funkcjeHashowania[int(i/2)] + "\n" +
+                h1 + "\n" + h2 + "\n" +
+                f"Liczba różniących się bitów: {bit_diff} z {total_bits}, "
+                f"procentowo: {percent_diff:.0f} %\n\n"
+            )
+            f.write(result)
 
 if __name__ == "__main__":
     main()
